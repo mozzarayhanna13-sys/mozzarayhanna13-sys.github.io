@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MooSmoothie — Jus & Smoothie Segar</title>
+  <meta name="description" content="MooSmoothie: toko jus & smoothie segar milik Mozza. Pesan online, rasa juara, bahan alami.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <audio id="bg-audio" src="assets/moosmoothie_ambient.wav" preload="auto" loop></audio>
+
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.svg" alt="MooSmoothie Logo" class="logo"/>
+      <div class="brand-text">
+        <h1>MooSmoothie</h1>
+        <span>by Mozza</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="#hero">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="#about">Tentang</a>
+      <a href="#contact">Kontak</a>
+    </nav>
+    <div class="actions">
+      <button id="ambienceToggle" class="btn secondary" aria-label="Toggle ambience">
+        <span class="icon">♪</span> Ambience
+      </button>
+      <button id="cartBtn" class="btn cart" aria-label="Buka keranjang">
+        <svg class="i" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path d="M6 6h15l-1.5 9H8L6 2H2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="9.5" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/>
+        </svg>
+        <span>Keranjang</span>
+        <span id="cartCount" class="badge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <section id="hero" class="hero">
+    <div class="gradient-bg" aria-hidden="true">
+      <div class="blob b1"></div>
+      <div class="blob b2"></div>
+      <div class="blob b3"></div>
+    </div>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <h2 class="wow pop">Segar. Fun. Penuh Cinta.</h2>
+        <p class="lead">Jus & smoothie dari buah asli — dibuat saat dipesan. Bebas pengawet, 100% kebahagiaan.</p>
+        <div class="cta">
+          <a href="#menu" class="btn primary">Lihat Menu</a>
+          <a href="#about" class="btn ghost">Kenapa MooSmoothie?</a>
+        </div>
+      </div>
+      <div class="slider">
+        <button class="slider-btn prev" aria-label="Sebelumnya">‹</button>
+        <div class="slides">
+          <div class="slide current">
+            <img src="assets/slide1.svg" alt="Smoothie stroberi krim" />
+            <div class="caption">Strawberry Dream</div>
+          </div>
+          <div class="slide">
+            <img src="assets/slide2.svg" alt="Jus mangga segar" />
+            <div class="caption">Mango Glow</div>
+          </div>
+          <div class="slide">
+            <img src="assets/slide3.svg" alt="Matcha smoothie" />
+            <div class="caption">Matcha Mellow</div>
+          </div>
+        </div>
+        <button class="slider-btn next" aria-label="Berikutnya">›</button>
+        <div class="dots" role="tablist" aria-label="Slider dots"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu" class="section">
+    <div class="section-head">
+      <h3 class="wow up">Menu Favorit</h3>
+      <p>Pilih favoritmu. Klik <b>Tambah</b> untuk masuk ke keranjang.</p>
+    </div>
+    <div id="productGrid" class="grid"></div>
+  </section>
+
+  <section id="about" class="section alt">
+    <div class="about">
+      <div class="about-text">
+        <h3 class="wow up">Tentang MooSmoothie</h3>
+        <p>Hai! Aku <b>Mozza</b>, pencinta buah dan pemilik MooSmoothie. Misi kami sederhana: bikin tubuh happy lewat minuman lezat yang jujur —
+          bahan segar, gula seimbang, dan kemasan ramah lingkungan.</p>
+        <ul class="tick">
+          <li>Bahan 100% buah & susu nabati</li>
+          <li>Tanpa pengawet & pewarna buatan</li>
+          <li>Pilihan vegan & rendah gula</li>
+        </ul>
+      </div>
+      <div class="about-art">
+        <div class="card bounce">
+          <h4>Promo Hari Ini</h4>
+          <p>Beli 2 gratis topping chia!</p>
+          <a href="#menu" class="btn small primary">Gas ke Menu</a>
+        </div>
+        <div class="card glass">
+          <h4>Jam Buka</h4>
+          <p>Senin–Minggu, 09.00–21.00 WIB</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="section-head">
+      <h3 class="wow up">Kontak & Lokasi</h3>
+      <p>DM kami di Instagram <a href="#" aria-label="Instagram MooSmoothie">@moosmoothie.id</a> atau pesan langsung di website ini.</p>
+    </div>
+    <div class="contact">
+      <form id="newsletter" class="card glass">
+        <h4>Dapatkan Update</h4>
+        <label> Email
+          <input type="email" id="newsEmail" placeholder="emailkamu@example.com" required>
+        </label>
+        <button class="btn primary" type="submit">Langganan</button>
+        <p class="tiny">Kami hanya kirim yang penting—janji.</p>
+      </form>
+      <div class="card">
+        <h4>Alamat</h4>
+        <p>Jl. Segar No. 7, Jakarta</p>
+        <h4>WhatsApp</h4>
+        <p>+62 812-0000-0000</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>© <span id="year"></span> MooSmoothie • Dibuat dengan ❤ oleh Mozza</div>
+    <div class="foot-actions">
+      <button class="btn small secondary" id="openCartFooter">Buka Keranjang</button>
+      <a class="btn small ghost" href="#hero">Ke Atas</a>
+    </div>
+  </footer>
+
+  <!-- Cart Drawer -->
+  <aside id="cartDrawer" class="cart-drawer" aria-hidden="true" aria-label="Keranjang Belanja">
+    <div class="cart-head">
+      <h4>Keranjang</h4>
+      <button id="closeCart" class="icon-btn" aria-label="Tutup keranjang">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-foot">
+      <div class="totals">
+        <span>Total</span>
+        <strong id="cartTotal">Rp0</strong>
+      </div>
+      <button id="checkoutBtn" class="btn primary full">Checkout</button>
+    </div>
+  </aside>
+
+  <!-- Checkout Modal -->
+  <dialog id="checkoutModal" class="modal">
+    <form method="dialog" id="checkoutForm" class="checkout-form">
+      <div class="modal-head">
+        <h4>Checkout</h4>
+        <button id="closeCheckout" class="icon-btn" value="cancel" aria-label="Tutup">✕</button>
+      </div>
+      <div id="orderPreview" class="order-preview"></div>
+      <div class="form-grid">
+        <label>Nama Lengkap
+          <input type="text" id="custName" required placeholder="Namamu">
+        </label>
+        <label>Email
+          <input type="email" id="custEmail" required placeholder="emailkamu@example.com">
+        </label>
+        <label>No. HP
+          <input type="tel" id="custPhone" required placeholder="08xxxxxxxxxx">
+        </label>
+        <label>Alamat Pengantaran
+          <textarea id="custAddr" rows="3" required placeholder="Jalan, RT/RW, Kota"></textarea>
+        </label>
+        <label>Metode Pembayaran
+          <select id="custPay" required>
+            <option value="QRIS">QRIS</option>
+            <option value="Transfer">Transfer Bank</option>
+            <option value="COD">COD</option>
+          </select>
+        </label>
+      </div>
+      <div class="modal-foot">
+        <button class="btn ghost" value="cancel">Batal</button>
+        <button id="placeOrder" class="btn primary" value="default">Buat Pesanan</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
