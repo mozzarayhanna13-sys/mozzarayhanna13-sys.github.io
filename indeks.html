@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aneka Jus Smoothie | Pastel Modern UI</title>
+  <meta name="description" content="Halaman modern & intuitif untuk menampilkan aneka jus smoothie dengan warna pastel (light pink, biru langit, kuning)."/>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --pink:#ffd6e8;          /* light pink */
+      --pink-600:#ff5ba6;      /* accent pink */
+      --sky:#bfe7ff;           /* sky blue */
+      --sky-600:#4db7ff;       /* accent sky */
+      --yellow:#fff6c2;        /* pastel yellow */
+      --yellow-600:#ffd24d;    /* accent yellow */
+      --bg:#fff;               /* base white */
+      --ink:#1c1c1c;           /* main text */
+      --muted:#6b7280;         /* muted text */
+      --card:#ffffffcc;        /* glass card */
+      --ring:#00000010;        /* subtle ring */
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu; color:var(--ink);
+      background: radial-gradient(1200px 800px at 10% -10%, var(--pink) 0%, transparent 60%),
+                  radial-gradient(1200px 800px at 110% 10%, var(--sky) 0%, transparent 60%),
+                  radial-gradient(900px 600px at 50% 120%, var(--yellow) 0%, transparent 60%),
+                  linear-gradient(180deg,#fff, #fff);
+      overflow-x:hidden;
+    }
+
+    /* Floating pastel blobs for depth */
+    .blob{position:absolute; filter:blur(40px); opacity:.55; pointer-events:none; mix-blend-mode:multiply; animation:float 18s ease-in-out infinite}
+    .blob.pink{background:var(--pink-600)}
+    .blob.sky{background:var(--sky-600)}
+    .blob.yellow{background:var(--yellow-600)}
+    .blob{width:260px;height:260px;border-radius:50%}
+    .blob:nth-child(1){top:-60px;left:-40px}
+    .blob:nth-child(2){top:120px;right:-60px;animation-duration:22s}
+    .blob:nth-child(3){bottom:-80px;left:20%;animation-duration:26s}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(18px)}}
+
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter:saturate(1.2) blur(10px);
+      background: linear-gradient(180deg, #ffffffd9, #ffffffb8);
+      border-bottom:1px solid var(--ring);
+    }
+    .nav{max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:16px; padding:14px 20px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:700}
+    .logo{width:40px;height:40px; border-radius:12px; display:grid; place-items:center; background:linear-gradient(135deg,var(--pink-600),var(--sky-600)); color:white; box-shadow:0 8px 30px #0001}
+    .brand span{font-size:18px}
+
+    .searchbar{flex:1; display:flex; gap:10px}
+    .searchbar input{
+      width:100%; border:1px solid var(--ring); outline:none; padding:12px 14px; border-radius:14px; background:#fff;
+      box-shadow:0 10px 24px #00000008;
+    }
+    .searchbar input:focus{border-color:var(--sky-600); box-shadow:0 8px 20px #4db7ff22}
+
+    .controls{display:flex; gap:10px; align-items:center}
+    select, .btn{border:1px solid var(--ring); background:#fff; padding:10px 12px; border-radius:12px; cursor:pointer}
+    .btn.primary{background:linear-gradient(135deg,var(--pink-600),var(--sky-600)); color:white; border:none}
+    .btn.ghost{background:#fff}
+
+    /* Hero */
+    .hero{max-width:1200px; margin:24px auto 8px; padding:0 20px; position:relative}
+    .hero-wrap{display:grid; grid-template-columns:1.2fr .8fr; gap:18px}
+    .tag{display:inline-flex; align-items:center; gap:8px; background:#fff; padding:8px 12px; border-radius:999px; border:1px dashed var(--pink-600); font-weight:600; color:#ff2d84}
+    .h1{font-size:44px; line-height:1.1; margin:10px 0 8px}
+    .sub{color:var(--muted)}
+
+    .carousel{position:relative; border-radius:22px; overflow:hidden; height:280px; box-shadow:0 20px 50px #00000012; border:1px solid var(--ring)}
+    .slides{display:flex; width:300%; height:100%; transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+    .slide{flex:1 0 100%; background-size:cover; background-position:center}
+    .dots{position:absolute; bottom:10px; left:0; right:0; display:flex; justify-content:center; gap:8px}
+    .dot{width:8px;height:8px;border-radius:50%; background:#ffffffaa; border:1px solid #fff; box-shadow:0 0 0 2px #00000022 inset}
+    .dot.active{background:#fff}
+
+    /* Filter chips */
+    .chipbar{max-width:1200px; margin:10px auto 0; padding:0 20px 10px; display:flex; flex-wrap:wrap; gap:10px}
+    .chip{background:#fff; border:1px solid var(--ring); padding:10px 12px; border-radius:999px; cursor:pointer; transition:.2s; user-select:none}
+    .chip.active, .chip:hover{background:linear-gradient(135deg, #fff, var(--yellow)); border-color:#0000; box-shadow:0 8px 22px #ffd24d28}
+
+    /* Grid */
+    .wrap{max-width:1200px; margin:10px auto 100px; padding:0 20px}
+    .grid{display:grid; grid-template-columns: repeat(12, 1fr); gap:16px}
+    @media (max-width:1100px){ .hero-wrap{grid-template-columns:1fr} }
+    @media (max-width:900px){ .grid{grid-template-columns: repeat(8, 1fr)} }
+    @media (max-width:640px){ .grid{grid-template-columns: repeat(4, 1fr)} .h1{font-size:34px} }
+
+    .card{grid-column: span 3; min-height: 320px; border-radius:20px; background:var(--card); border:1px solid var(--ring);
+      box-shadow:0 18px 50px #00000010; overflow:hidden; position:relative; display:flex; flex-direction:column; transform: translateY(8px); opacity:0; transition: transform .5s, opacity .5s}
+    .card.revealed{transform: translateY(0); opacity:1}
+    .thumb{position:relative; aspect-ratio: 4/3; overflow:hidden; background:linear-gradient(135deg,var(--pink),#fff)}
+    .thumb img{width:100%; height:100%; object-fit:cover; display:block}
+    .badge{position:absolute; top:10px; left:10px; background:#00000080; color:#fff; padding:6px 10px; border-radius:999px; font-size:12px}
+    .info{padding:14px 14px 12px; display:grid; gap:8px}
+    .title{font-weight:700}
+    .tags{display:flex; flex-wrap:wrap; gap:6px}
+    .tagpill{font-size:12px; padding:6px 8px; border-radius:999px; background:#fff; border:1px solid var(--ring)}
+    .price{font-weight:700; font-size:18px}
+
+    .actions{margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:0 14px 14px}
+    .btn.add{flex:1; display:flex; align-items:center; justify-content:center; gap:8px; padding:12px 14px; border-radius:12px; border:none; color:#fff; background:linear-gradient(135deg,var(--pink-600),var(--sky-600));
+      box-shadow:0 12px 30px #ff5ba622, 0 8px 20px #4db7ff18; cursor:pointer; transition: transform .1s ease}
+    .btn.add:active{transform: translateY(1px)}
+    .fav{width:42px;height:42px; display:grid; place-items:center; border-radius:12px; border:1px solid var(--ring); background:#fff; cursor:pointer}
+    .fav.active{background:linear-gradient(135deg,var(--pink),var(--yellow)); box-shadow:0 8px 18px #ffd24d28 inset}
+
+    /* Floating Cart */
+    .cart-fab{position:fixed; right:18px; bottom:18px; z-index:60}
+    .fab{position:relative; width:62px;height:62px; border:none; border-radius:18px; display:grid; place-items:center; cursor:pointer;
+      color:#fff; background:linear-gradient(135deg,var(--sky-600),var(--pink-600)); box-shadow:0 18px 40px #4db7ff40}
+    .fab .count{position:absolute; top:-6px; right:-6px; background:#111; color:#fff; font-size:12px; font-weight:700; padding:6px 8px; border-radius:999px; border:3px solid #fff}
+
+    /* Cart drawer */
+    .drawer{position:fixed; right:0; top:0; height:100dvh; width:min(420px,100%); background:#fff; box-shadow:-20px 0 60px #00000022; transform:translateX(100%);
+      transition:transform .4s ease; z-index:80; display:flex; flex-direction:column}
+    .drawer.open{transform:translateX(0)}
+    .drawer header{position:sticky; top:0; background:#fff; padding:16px; border-bottom:1px solid var(--ring)}
+    .drawer .list{flex:1; overflow:auto; padding:16px; display:grid; gap:12px}
+    .row{display:grid; grid-template-columns:56px 1fr auto; align-items:center; gap:12px; border:1px solid var(--ring); border-radius:14px; padding:10px; background:#fff}
+    .row .thumbx{width:56px;height:56px; border-radius:10px; overflow:hidden; background:var(--pink)}
+    .row .name{font-weight:600}
+    .row .qty{display:flex; align-items:center; gap:8px}
+    .qty button{width:28px;height:28px; border-radius:8px; border:1px solid var(--ring); background:#fff; cursor:pointer}
+    .drawer footer{border-top:1px solid var(--ring); padding:16px; display:grid; gap:12px}
+    .total{display:flex; align-items:center; justify-content:space-between; font-weight:700}
+
+    /* Toast */
+    .toast{position:fixed; left:50%; transform:translateX(-50%); bottom:100px; background:#111; color:#fff; padding:12px 14px; border-radius:12px; opacity:0; pointer-events:none; transition:.3s; z-index:100}
+    .toast.show{opacity:1; transform:translate(-50%,-6px)}
+
+    /* Utility */
+    .sr{position:absolute; width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+  </style>
+</head>
+<body>
+  <!-- Ambient blobs -->
+  <div class="blob pink"></div>
+  <div class="blob sky"></div>
+  <div class="blob yellow"></div>
+
+  <header>
+    <nav class="nav">
+      <div class="brand">
+        <div class="logo">🍹</div>
+        <span>Aneka Jus Smoothie</span>
+      </div>
+      <div class="searchbar">
+        <input id="q" placeholder="Cari rasa, buah, atau kata kunci…" aria-label="Pencarian" />
+      </div>
+      <div class="controls">
+        <select id="sort">
+          <option value="featured">Paling populer</option>
+          <option value="price-asc">Harga termurah</option>
+          <option value="price-desc">Harga termahal</option>
+          <option value="name">Urut nama A–Z</option>
+        </select>
+        <button class="btn ghost" id="clearFilters" title="Reset filter">Reset</button>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-wrap">
+      <div>
+        <span class="tag">✨ Fresh • Natural • Fun</span>
+        <h1 class="h1">Nikmati <span style="background:linear-gradient(135deg,var(--pink-600),var(--sky-600));-webkit-background-clip:text;background-clip:text;color:transparent">Smoothie Ceria</span> setiap hari</h1>
+        <p class="sub">Pilih dari berbagai varian buah, green smoothie, hingga protein boost. Warna cerah, rasa segar, mood langsung naik! 💖💙💛</p>
+        <div style="display:flex; gap:10px; margin-top:14px">
+          <button class="btn primary" onclick="scrollToGrid()">Lihat Menu</button>
+          <button class="btn ghost" onclick="randomPick()">Bingungkan Aku</button>
+        </div>
+      </div>
+      <div class="carousel" aria-label="Promo carousel">
+        <div class="slides" id="slides">
+          <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1524592094714-0f0654e20314?q=80&w=1200&auto=format&fit=crop')"></div>
+          <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop')"></div>
+          <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop')"></div>
+        </div>
+        <div class="dots" id="dots" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter chips -->
+  <div class="chipbar" id="chipbar" role="toolbar" aria-label="Filter kategori"></div>
+
+  <main class="wrap">
+    <div class="grid" id="grid" aria-live="polite"></div>
+  </main>
+
+  <!-- Cart Floating Button -->
+  <div class="cart-fab">
+    <button class="fab" id="openCart" aria-haspopup="dialog" aria-controls="cartDrawer">
+      🛒
+      <span class="count" id="cartCount">0</span>
+    </button>
+  </div>
+
+  <!-- Drawer Cart -->
+  <aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Keranjang Belanja">
+    <header>
+      <div class="nav" style="padding:0; justify-content:space-between">
+        <div class="brand"><div class="logo">🧺</div><span>Keranjang</span></div>
+        <button class="btn ghost" id="closeCart">Tutup</button>
+      </div>
+    </header>
+    <div class="list" id="cartList"></div>
+    <footer>
+      <div class="total"><span>Total</span><span id="cartTotal">Rp0</span></div>
+      <button class="btn primary" id="checkoutBtn">Checkout</button>
+    </footer>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // ------- Data Menu -------
+    const smoothies = [
+      {id:'s1', name:'Strawberry Bliss', cat:'Fruity', price:28000, rating:4.8, tags:['strawberry','yogurt','mint'], color:'#ffd6e8', emoji:'🍓'},
+      {id:'s2', name:'Mango Sunrise', cat:'Fruity', price:30000, rating:4.7, tags:['mango','orange','honey'], color:'#fff0b8', emoji:'🥭'},
+      {id:'s3', name:'Blue Sky Banana', cat:'Fruity', price:26000, rating:4.6, tags:['banana','blueberry'], color:'#bfe7ff', emoji:'🍌'},
+      {id:'s4', name:'Tropical Fiesta', cat:'Fruity', price:32000, rating:4.9, tags:['pineapple','coconut','lime'], color:'#ffe9a6', emoji:'🍍'},
+      {id:'s5', name:'Green Glow', cat:'Green', price:31000, rating:4.7, tags:['spinach','apple','chia'], color:'#d8f5cf', emoji:'🥬'},
+      {id:'s6', name:'Matcha Breeze', cat:'Green', price:34000, rating:4.5, tags:['matcha','almond milk'], color:'#e8f3d6', emoji:'🍵'},
+      {id:'s7', name:'Protein Power', cat:'Protein', price:38000, rating:4.8, tags:['whey','peanut butter','banana'], color:'#ffe2c6', emoji:'💪'},
+      {id:'s8', name:'Choco Nutty', cat:'Protein', price:39000, rating:4.6, tags:['cacao','hazelnut','oats'], color:'#f6e2d2', emoji:'🍫'},
+      {id:'s9', name:'Detox Zest', cat:'Detox', price:30000, rating:4.4, tags:['lemon','ginger','cucumber'], color:'#e7ffe1', emoji:'🍋'},
+      {id:'s10', name:'Berry Antioxidant', cat:'Detox', price:33000, rating:4.7, tags:['mixed berries','acai'], color:'#f5e1ff', emoji:'🫐'},
+      {id:'s11', name:'Sunshine Carrot', cat:'Fruity', price:29000, rating:4.5, tags:['carrot','orange','turmeric'], color:'#ffe7b8', emoji:'🥕'},
+      {id:'s12', name:'Avocado Dream', cat:'Creamy', price:36000, rating:4.9, tags:['avocado','milk','gula aren'], color:'#e5f6d8', emoji:'🥑'}
+    ];
+
+    const categories = ['All','Fruity','Green','Protein','Detox','Creamy'];
+
+    // ------- Helpers -------
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
+
+    const currency = n => n.toLocaleString('id-ID',{style:'currency', currency:'IDR', maximumFractionDigits:0});
+
+    function showToast(msg){
+      const el = $('#toast'); el.textContent = msg; el.classList.add('show');
+      setTimeout(()=> el.classList.remove('show'), 1600);
+    }
+
+    function scrollToGrid(){
+      $('#grid').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    function randomPick(){
+      const item = smoothies[Math.floor(Math.random()*smoothies.length)];
+      showToast(`Coba ${item.name} – ${currency(item.price)}`);
+      // spotlight card
+      const card = document.getElementById('card-'+item.id);
+      if(card){ card.animate([{boxShadow:'0 0 0 0px #ffd24d00'},{boxShadow:'0 0 0 14px #ffd24d66'},{boxShadow:'0 0 0 0px #ffd24d00'}], {duration:900, easing:'ease'}); card.scrollIntoView({behavior:'smooth', block:'center'}); }
+    }
+
+    // ------- Render UI -------
+    const state = { q:'', cat:'All', sort:'featured', favs:new Set(), cart:{} };
+
+    function renderChips(){
+      const wrap = $('#chipbar');
+      wrap.innerHTML = '';
+      categories.forEach(c=>{
+        const btn = document.createElement('button');
+        btn.className = 'chip' + (state.cat===c ? ' active' : '');
+        btn.textContent = c;
+        btn.onclick = ()=>{ state.cat=c; render(); };
+        wrap.appendChild(btn);
+      })
+    }
+
+    function renderGrid(){
+      const grid = $('#grid');
+      grid.innerHTML = '';
+      let items = smoothies.filter(s=> state.cat==='All' ? true : s.cat===state.cat);
+      if(state.q){ const q = state.q.toLowerCase(); items = items.filter(s=> s.name.toLowerCase().includes(q) || s.tags.join(' ').toLowerCase().includes(q)); }
+      if(state.sort==='price-asc') items.sort((a,b)=> a.price-b.price);
+      if(state.sort==='price-desc') items.sort((a,b)=> b.price-a.price);
+      if(state.sort==='name') items.sort((a,b)=> a.name.localeCompare(b.name));
+
+      items.forEach(s=>{
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.id = 'card-'+s.id;
+        card.innerHTML = `
+          <div class="thumb" style="background: linear-gradient(135deg, ${s.color}, #fff)">
+            <img loading="lazy" alt="${s.name}" src="https://images.unsplash.com/photo-1553531888-a9da1f26e757?q=80&w=1200&auto=format&fit=crop" onerror="this.style.display='none'" />
+            <span class="badge">⭐ ${s.rating.toFixed(1)}</span>
+          </div>
+          <div class="info">
+            <div class="title">${s.emoji} ${s.name}</div>
+            <div class="tags">${s.tags.map(t=>`<span class='tagpill'>${t}</span>`).join('')}</div>
+            <div class="price">${currency(s.price)}</div>
+          </div>
+          <div class="actions">
+            <button class="btn add" data-id="${s.id}">Tambah ke Keranjang</button>
+            <button class="fav ${state.favs.has(s.id)?'active':''}" aria-label="Favorit" data-fav="${s.id}">❤</button>
+          </div>`;
+        grid.appendChild(card);
+      })
+
+      // reveal animation when in view
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target); } });
+      }, {threshold:.12});
+      $$('.card').forEach(c=> io.observe(c));
+
+      // bind actions
+      $$('.btn.add').forEach(btn=> btn.addEventListener('click', ()=> addToCart(btn.dataset.id)));
+      $$('[data-fav]').forEach(btn=> btn.addEventListener('click', ()=> toggleFav(btn.dataset.fav, btn)));
+    }
+
+    function render(){
+      renderChips();
+      renderGrid();
+    }
+
+    // ------- Favorites -------
+    function toggleFav(id, el){
+      if(state.favs.has(id)) state.favs.delete(id); else state.favs.add(id);
+      el?.classList.toggle('active');
+      showToast(state.favs.has(id)?'Ditambahkan ke favorit':'Dihapus dari favorit');
+      localStorage.setItem('smoothie-favs', JSON.stringify([...state.favs]));
+    }
+
+    // ------- Cart -------
+    function addToCart(id){
+      state.cart[id] = (state.cart[id]||0) + 1;
+      updateCartUI();
+      showToast('Masuk keranjang!');
+    }
+    function updateCartUI(){
+      const list = $('#cartList');
+      list.innerHTML = '';
+      let total = 0;
+      Object.entries(state.cart).forEach(([id,qty])=>{
+        const s = smoothies.find(x=>x.id===id);
+        total += s.price*qty;
+        const row = document.createElement('div');
+        row.className = 'row';
+        row.innerHTML = `
+          <div class="thumbx" style="background:${s.color}"></div>
+          <div>
+            <div class="name">${s.name}</div>
+            <div class="muted">${currency(s.price)}</div>
+          </div>
+          <div class="qty">
+            <button aria-label="kurangi" data-dec="${id}">−</button>
+            <span>${qty}</span>
+            <button aria-label="tambah" data-inc="${id}">+</button>
+          </div>`;
+        list.appendChild(row);
+      });
+      $('#cartTotal').textContent = currency(total);
+      const count = Object.values(state.cart).reduce((a,b)=>a+b,0);
+      $('#cartCount').textContent = count;
+
+      $$('[data-inc]').forEach(b=> b.onclick = ()=> { state.cart[b.dataset.inc]++; updateCartUI(); });
+      $$('[data-dec]').forEach(b=> b.onclick = ()=> {
+        const id = b.dataset.dec; state.cart[id] = Math.max(0,(state.cart[id]-1)); if(state.cart[id]===0) delete state.cart[id]; updateCartUI();
+      });
+
+      localStorage.setItem('smoothie-cart', JSON.stringify(state.cart));
+    }
+
+    // Drawer controls
+    $('#openCart').addEventListener('click', ()=> $('#cartDrawer').classList.add('open'));
+    $('#closeCart').addEventListener('click', ()=> $('#cartDrawer').classList.remove('open'));
+    $('#checkoutBtn').addEventListener('click', ()=> showToast('Checkout coming soon ✨'));
+
+    // Search & Sort & Reset
+    $('#q').addEventListener('input', e=>{ state.q = e.target.value; render(); });
+    $('#sort').addEventListener('change', e=>{ state.sort = e.target.value; render(); });
+    $('#clearFilters').addEventListener('click', ()=>{ state.q=''; state.cat='All'; state.sort='featured'; $('#q').value=''; $('#sort').value='featured'; render(); });
+
+    // Carousel
+    const slides = $('#slides');
+    const dotsWrap = $('#dots');
+    let idx = 0; const total = slides.children.length;
+    function buildDots(){ dotsWrap.innerHTML=''; for(let i=0;i<total;i++){ const d=document.createElement('div'); d.className='dot'+(i===0?' active':''); d.onclick=()=>go(i); dotsWrap.appendChild(d);} }
+    function go(i){ idx=i%total; slides.style.transform = `translateX(-${idx*100}%)`; $$('.dot',dotsWrap).forEach((d,ii)=> d.classList.toggle('active', ii===idx)); }
+    buildDots(); setInterval(()=> go(idx+1), 3800);
+
+    // Restore state
+    (function init(){
+      try{ const favs = JSON.parse(localStorage.getItem('smoothie-favs')||'[]'); state.favs = new Set(favs); }catch{}
+      try{ state.cart = JSON.parse(localStorage.getItem('smoothie-cart')||'{}'); }catch{}
+      updateCartUI();
+      render();
+    })();
+  </script>
+</body>
+</html>
